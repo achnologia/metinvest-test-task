@@ -13,4 +13,17 @@ public class StudentCourse
     public Student Student { get; private set; }
     [ForeignKey(nameof(IdCourse))]
     public Course Course { get; private set; }
+
+    public StudentCourse(int idStudent, int idCourse, DateTime startDate, DateTime endDate)
+    {
+        IdStudent = idStudent;
+        IdCourse = idCourse;
+        StartDate = startDate;
+        EndDate = endDate;
+    }
+    
+    public bool ExistsOnDate(DateTime date)
+    {
+        return StartDate <= date && EndDate >= date;
+    }
 }

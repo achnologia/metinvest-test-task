@@ -9,4 +9,16 @@ public class Student : Entity
     public string FullName => $"{FirstName} {LastName}";
     
     public IEnumerable<StudentCourse> Courses { get; private set; }
+
+    public Student(string firstName, string lastName, string email)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+    }
+
+    public bool HasOverlappingCourse(DateTime startDate, DateTime endDate)
+    {
+        return Courses.Any(x => x.ExistsOnDate(startDate) || x.ExistsOnDate(endDate));
+    }
 }

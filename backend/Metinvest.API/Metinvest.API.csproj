@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Metinvest.Application\Metinvest.Application.csproj" />
       <ProjectReference Include="..\Metinvest.Infrastructure\Metinvest.Infrastructure.csproj" />
     </ItemGroup>
 
