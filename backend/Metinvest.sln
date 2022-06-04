@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metinvest.API", "Metinvest.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metinvest.Infrastructure", "Metinvest.Infrastructure\Metinvest.Infrastructure.csproj", "{0368BB3F-1A55-4F8D-BD60-F9F588FB7F76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metinvest.Domain", "Metinvest.Domain\Metinvest.Domain.csproj", "{58C7119C-60A9-4E4C-89B0-AFB108FF0847}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metinvest.Application", "Metinvest.Application\Metinvest.Application.csproj", "{657DC0AA-269C-4996-AABA-125411BBE510}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{0368BB3F-1A55-4F8D-BD60-F9F588FB7F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0368BB3F-1A55-4F8D-BD60-F9F588FB7F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0368BB3F-1A55-4F8D-BD60-F9F588FB7F76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58C7119C-60A9-4E4C-89B0-AFB108FF0847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58C7119C-60A9-4E4C-89B0-AFB108FF0847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58C7119C-60A9-4E4C-89B0-AFB108FF0847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58C7119C-60A9-4E4C-89B0-AFB108FF0847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{657DC0AA-269C-4996-AABA-125411BBE510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{657DC0AA-269C-4996-AABA-125411BBE510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{657DC0AA-269C-4996-AABA-125411BBE510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{657DC0AA-269C-4996-AABA-125411BBE510}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
