@@ -15,13 +15,13 @@ public class StudentCoursesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AssociateCourseWithStudent([FromBody] AssociateCourseWithStudentRequest request)
+    public async Task<IActionResult> AssociateCourseWithStudent([FromBody] AssociateCourseWithStudentRequest request, CancellationToken token)
     {
-        var success = await _service.AssociateCourseWithStudentAsync(request.FullName, request.Email, request.IdCourse, request.StartDate, request.EndDate);
+        var success = await _service.AssociateCourseWithStudentAsync(request.FullName, request.Email, request.IdCourse, request.StartDate, request.EndDate, token);
 
         if (!success)
             return NotFound();
 
-        return Ok();
+        return NoContent();
     }
 }

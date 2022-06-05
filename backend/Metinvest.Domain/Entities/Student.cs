@@ -1,4 +1,6 @@
-﻿namespace Metinvest.Domain.Entities;
+﻿using Metinvest.Domain.Base;
+
+namespace Metinvest.Domain.Entities;
 
 public class Student : Entity
 {
@@ -9,6 +11,7 @@ public class Student : Entity
     public string FullName => $"{FirstName} {LastName}";
     
     public IEnumerable<StudentCourse> Courses { get; private set; }
+    public IList<Holiday> Holidays { get; private set; }
 
     public Student(string firstName, string lastName, string email)
     {
@@ -20,5 +23,25 @@ public class Student : Entity
     public bool HasOverlappingCourse(DateTime startDate, DateTime endDate)
     {
         return Courses.Any(x => x.ExistsOnDate(startDate) || x.ExistsOnDate(endDate));
+    }
+    
+    public bool HasOverlappingCourse(int idCourse, DateTime endDate)
+    {
+        return Courses.Any(x => x.IdCourse != idCourse && x.ExistsOnDate(endDate));
+    }
+    
+    public bool HasOverlappingHoliday(DateTime startDate, DateTime endDate)
+    {
+        return Holidays.Any(x => x.ExistsOnDate(startDate) || x.ExistsOnDate(endDate));
+    }
+    
+    public StudentCourse GetCourseOnDate(DateTime date)
+    {
+        return Courses.FirstOrDefault(x => x.ExistsOnDate(date));
+    }
+
+    public void AddHoliday(Holiday holiday)
+    {
+        Holidays.Add(holiday);
     }
 }

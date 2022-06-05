@@ -1,4 +1,6 @@
-﻿namespace Metinvest.Domain.Entities;
+﻿using Metinvest.Domain.Base;
+
+namespace Metinvest.Domain.Entities;
 
 public class Course : Entity
 {

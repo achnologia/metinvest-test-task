@@ -1,23 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Metinvest.Domain.Base;
 
 namespace Metinvest.Domain.Entities;
 
-public class StudentCourse
+public class Holiday : Entity
 {
     public int IdStudent { get; private set; }
-    public int IdCourse { get; private set; }
     public DateTime StartDate { get; private set; }
     public DateTime EndDate { get; private set; }
+
+    public int TotalWeeks => (int)(EndDate - StartDate).TotalDays / 7 + 1;
     
     [ForeignKey(nameof(IdStudent))]
     public Student Student { get; private set; }
-    [ForeignKey(nameof(IdCourse))]
-    public Course Course { get; private set; }
 
-    public StudentCourse(int idStudent, int idCourse, DateTime startDate, DateTime endDate)
+    public Holiday(int idStudent, DateTime startDate, DateTime endDate)
     {
         IdStudent = idStudent;
-        IdCourse = idCourse;
         StartDate = startDate;
         EndDate = endDate;
     }
@@ -25,10 +24,5 @@ public class StudentCourse
     public bool ExistsOnDate(DateTime date)
     {
         return StartDate <= date && EndDate >= date;
-    }
-
-    public void UpdateEndDate(DateTime date)
-    {
-        EndDate = date;
     }
 }

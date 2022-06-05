@@ -16,9 +16,9 @@ public class CoursesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAvailableCourses()
+    public async Task<IActionResult> GetAvailableCourses(CancellationToken token)
     {
-        var courses = await _service.GetAllAsync();
+        var courses = await _service.GetAllAsync(token);
 
         var response = new GetAllCoursesResponse(courses.Select(x => x.CourseName));
         
@@ -26,17 +26,17 @@ public class CoursesController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateCourse([FromBody] CreateCourseRequest request)
+    public async Task<IActionResult> CreateCourse([FromBody] CreateCourseRequest request, CancellationToken token)
     {
-        var idCreated = await _service.CreateAsync(request.CourseName);
+        var idCreated = await _service.CreateAsync(request.CourseName, token);
 
         return CreatedAtRoute("CourseLink", new { id = idCreated }, request);
     }
     
     [HttpGet("{id}", Name = "CourseLink")]
-    public async Task<IActionResult> GetCourse([FromRoute]int id)
+    public async Task<IActionResult> GetCourse([FromRoute]int id, CancellationToken token)
     {
-        var course = await _service.GetByIdAsync(id);
+        var course = await _service.GetByIdAsync(id, token);
 
         if(course is null)
             return NotFound();
@@ -47,9 +47,9 @@ public class CoursesController : ControllerBase
     }
     
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCourse([FromRoute] int id)
+    public async Task<IActionResult> DeleteCourse([FromRoute] int id, CancellationToken token)
     {
-        var deleted = await _service.DeleteAsync(id);
+        var deleted = await _service.DeleteAsync(id, token);
 
         if(!deleted)
             return NotFound();

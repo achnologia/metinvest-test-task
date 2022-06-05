@@ -7,6 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MediatR" Version="10.0.1" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
@@ -14,7 +17,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Metinvest.Domain\Metinvest.Domain.csproj" />
-      <ProjectReference Include="..\Metinvest.Infrastructure\Metinvest.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

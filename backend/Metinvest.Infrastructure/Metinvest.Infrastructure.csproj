@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Metinvest.Application\Metinvest.Application.csproj" />
       <ProjectReference Include="..\Metinvest.Domain\Metinvest.Domain.csproj" />
     </ItemGroup>
 

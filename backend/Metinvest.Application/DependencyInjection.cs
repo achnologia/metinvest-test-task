@@ -1,4 +1,6 @@
-﻿using Metinvest.Application.Courses.Services;
+﻿using System.Reflection;
+using MediatR;
+using Metinvest.Application.Courses.Services;
 using Metinvest.Application.StudentCourses.Services;
 using Metinvest.Application.Students.Services;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +15,8 @@ public static class DependencyInjection
         services.AddScoped<IStudentService, StudentService>();
         services.AddScoped<ICourseService, CourseService>();
         services.AddScoped<IStudentCourseService, StudentCourseService>();
+        
+        services.AddMediatR(Assembly.GetExecutingAssembly());
         
         return services;
     }

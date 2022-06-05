@@ -1,54 +1,72 @@
-﻿using Metinvest.Domain.Entities;
+﻿using Metinvest.Application.Shared;
+using Metinvest.Domain.Entities;
 using Metinvest.Domain.Exceptions;
-using Metinvest.Infrastructure.EFCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Metinvest.Application.Courses.Services;
 
 public class CourseService : ICourseService
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IApplicationDbContext _context;
 
-    public CourseService(ApplicationDbContext context)
+    public CourseService(IApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<IEnumerable<Course>> GetAllAsync()
+    public async Task<IEnumerable<Course>> GetAllAsync(CancellationToken token)
     {
-        return await _context.Courses.ToListAsync();
+        return await _context.Courses.ToListAsync(token);
     }
 
-    public async Task<int> CreateAsync(string courseName)
+    public async Task<int> CreateAsync(string courseName, CancellationToken token)
     {
-        var existingCourse = await _context.Courses.SingleOrDefaultAsync(x => x.CourseName == courseName);
+        var existingCourse = await _context.Courses.SingleOrDefaultAsync(x => x.CourseName == courseName, token);
 
         if (existingCourse is not null)
             throw new UserFriendlyException("The course with such name already exists");
 
         var newCourse = new Course(courseName);
 
-        await _context.Courses.AddAsync(newCourse);
-        await _context.SaveChangesAsync();
+        await _context.Courses.AddAsync(newCourse, token);
+        await _context.SaveChangesAsync(token);
 
         return newCourse.Id;
     }
 
-    public async Task<Course> GetByIdAsync(int id)
+    public async Task<Course?> GetByIdAsync(int id, CancellationToken token)
     {
-        return await _context.Courses.SingleOrDefaultAsync(x => x.Id == id);
+        return await _context.Courses.SingleOrDefaultAsync(x => x.Id == id, token);
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int id, CancellationToken token)
     {
-        var course = await GetByIdAsync(id);
+        var course = await GetByIdAsync(id, token);
 
         if (course is null)
             return false;
 
         _context.Courses.Remove(course);
-        var deleted = await _context.SaveChangesAsync();
+        var deleted = await _context.SaveChangesAsync(token);
 
         return deleted > 0;
+    }
+
+    public async Task ExtendCourseDuration(Student student, Holiday holiday, CancellationToken token)
+    {
+        var course = student.GetCourseOnDate(holiday.StartDate);
+
+        if (course is null)
+            return;
+
+        var newEndDate = course.EndDate.AddDays(holiday.TotalWeeks * 7);
+        
+        if (student.HasOverlappingCourse(course.IdCourse, newEndDate))
+            throw new UserFriendlyException("There's an overlapping course for this period");
+        
+        course.UpdateEndDate(newEndDate);
+
+        _context.Update(course);
+        await _context.SaveChangesAsync(token);
     }
 }
