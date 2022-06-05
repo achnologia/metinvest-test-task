@@ -1,6 +1,6 @@
-﻿using Metinvest.API.Contracts.Requests.Students;
+﻿using Metinvest.API.Contracts.Common;
+using Metinvest.API.Contracts.Requests.Students;
 using Metinvest.API.Contracts.Responses.Students;
-using Metinvest.API.Contracts.Shared;
 using Metinvest.Application.Students.Services;
 using Microsoft.AspNetCore.Mvc;
 

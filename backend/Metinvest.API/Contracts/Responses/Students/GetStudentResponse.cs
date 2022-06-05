@@ -1,4 +1,4 @@
-﻿using Metinvest.API.Contracts.Shared;
+﻿using Metinvest.API.Contracts.Common;
 
 namespace Metinvest.API.Contracts.Responses.Students;
 
