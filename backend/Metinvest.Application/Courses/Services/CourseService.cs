@@ -54,19 +54,47 @@ public class CourseService : ICourseService
 
     public async Task ExtendCourseDuration(Student student, Holiday holiday, CancellationToken token)
     {
-        var course = student.GetCourseOnDate(holiday.StartDate);
+        ManageExtendCourseByStartDate(student, holiday.StartDate, holiday.TotalWeeks);
+        ManageExtendCourseByEndDate(student, holiday.EndDate, holiday.TotalWeeks);
+        
+        await _context.SaveChangesAsync(token);
+    }
+
+    private void ManageExtendCourseByStartDate(Student student, DateTime startDate, int holidayNumberOfWeeks)
+    {
+        var course = student.GetCourseOnDate(startDate);
 
         if (course is null)
             return;
 
-        var newEndDate = course.EndDate.AddDays(holiday.TotalWeeks * 7);
+        var numberOfWeeks = course.TotalWeeks >= holidayNumberOfWeeks ? holidayNumberOfWeeks : course.TotalWeeks;
+        
+        var newEndDate = course.EndDate.AddDays(numberOfWeeks * 7);
         
         if (student.HasOverlappingCourse(course.IdCourse, newEndDate))
             throw new UserFriendlyException("There's an overlapping course for this period");
         
         course.UpdateEndDate(newEndDate);
-
+        
         _context.Update(course);
-        await _context.SaveChangesAsync(token);
+    }
+    
+    private void ManageExtendCourseByEndDate(Student student, DateTime endDate, int holidayNumberOfWeeks)
+    {
+        var course = student.GetCourseOnDate(endDate);
+
+        if (course is null)
+            return;
+
+        var numberOfWeeks = course.TotalWeeks >= holidayNumberOfWeeks ? holidayNumberOfWeeks : course.TotalWeeks;
+        
+        var newEndDate = course.EndDate.AddDays(numberOfWeeks * 7);
+        
+        if (student.HasOverlappingCourse(course.IdCourse, newEndDate))
+            throw new UserFriendlyException("There's an overlapping course for this period");
+        
+        course.UpdateEndDate(newEndDate);
+        
+        _context.Update(course);
     }
 }

@@ -13,6 +13,8 @@ public class StudentCourse
     public Student Student { get; private set; }
     [ForeignKey(nameof(IdCourse))]
     public Course Course { get; private set; }
+    
+    public int TotalWeeks => (int)(EndDate - StartDate).TotalDays / 7 + 1;
 
     public StudentCourse(int idStudent, int idCourse, DateTime startDate, DateTime endDate)
     {
