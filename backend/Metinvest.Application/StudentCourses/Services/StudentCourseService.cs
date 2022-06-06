@@ -16,7 +16,10 @@ public class StudentCourseService : IStudentCourseService
 
     public async Task<bool> AssociateCourseWithStudentAsync(string fullName, string email, int idCourse, DateTime startDate, DateTime endDate, CancellationToken token)
     {
-        var student = await _context.Students.Include(x => x.Courses).SingleOrDefaultAsync(x => x.Email == email, token);
+        var student = await _context.Students
+            .Include(x => x.Courses)
+            .Include(x => x.Holidays)
+            .SingleOrDefaultAsync(x => x.Email == email, token);
 
         if (student is null)
             return false;

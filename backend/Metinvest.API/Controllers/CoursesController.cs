@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Metinvest.API.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/courses")]
 public class CoursesController : ControllerBase
 {
     private readonly ICourseService _service;

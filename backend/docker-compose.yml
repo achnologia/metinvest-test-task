@@ -1,11 +1,30 @@
-version: "3.2"
-services:
+version: "3.9"
 
-  sqlServer:
-    container_name: sqlServer
-    image: mcr.microsoft.com/mssql/server:2019-latest
+networks:
+  localdev:
+    name: localdev
+
+services:
+  main-api:
+    build:
+      context: .
+      dockerfile: Metinvest.API/Dockerfile
+    restart: always
     ports:
-      - "1433:1433"
+      - "7000:80"
+    depends_on:
+      - sqlServer
+    networks:
+      - localdev
+  
+  sqlServer:
+    container_name: sqlServer1
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: unless-stopped
+    ports:
+      - "1434:1433"
     environment:
       SA_PASSWORD: "Database.01"
       ACCEPT_EULA: "Y"
+    networks:
+      - localdev
