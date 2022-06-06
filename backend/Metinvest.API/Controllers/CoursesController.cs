@@ -1,10 +1,12 @@
 ﻿using Metinvest.API.Contracts.Requests.Courses;
 using Metinvest.API.Contracts.Responses.Courses;
+using Metinvest.API.Filters;
 using Metinvest.Application.Courses.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Metinvest.API.Controllers;
 
+[ApiExceptionFilter]
 [Route("api/courses")]
 public class CoursesController : ControllerBase
 {
