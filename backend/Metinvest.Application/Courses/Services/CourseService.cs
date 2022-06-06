@@ -54,6 +54,8 @@ public class CourseService : ICourseService
 
     public async Task ExtendCourseDuration(Student student, Holiday holiday, CancellationToken token)
     {
+        // TODO check if holiday totally covers a course or a few
+        // TODO manage continuous sequence of courses 
         ManageExtendCourseByStartDate(student, holiday.StartDate, holiday.TotalWeeks);
         ManageExtendCourseByEndDate(student, holiday.EndDate, holiday.TotalWeeks);
         
